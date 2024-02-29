@@ -4,11 +4,14 @@ def get_user_profiles(group_ids):
     page_cursor = None
 
     for group_id in group_ids:
+        page_number = 1 
+        processed_groups = set()
+
         while True:
             try:
-                url = f"https://groups.roblox.com/v1/groups/{group_id}/users"
+                url = f"https://groups.roblox.com/v1/groups/{group_id}/users?cursor=&limit=100&page={page_number}"
                 if page_cursor:
-                    url += f"?cursor={page_cursor}"
+                    url += f"&cursor={page_cursor}"
 
                 response = requests.get(url)
 
@@ -24,21 +27,33 @@ def get_user_profiles(group_ids):
                             groups_url = f"https://groups.roblox.com/v1/users/{user_id}/groups/roles"
                             groups_response = requests.get(groups_url)
 
-                            if groups_response.status_code == 200:
+                            try:
+                                groups_response.raise_for_status()
                                 groups_data = groups_response.json()
                                 user_groups = groups_data.get("data", [])
 
                                 for group in user_groups:
                                     group_id = group.get("group", {}).get("id")
-                                    group_link = f"https://www.roblox.com/groups/{group_id}/x"
-                                    print(f"User ID: {user_id}, Group ID: {group_id}, Group Link: {group_link}")
 
-                            else:
+                                    
+                                    if group_id not in processed_groups:
+                                        processed_groups.add(group_id)
+
+                                        group_link = f"https://www.roblox.com/groups/{group_id}/x"
+                                        print(f"User ID: {user_id}, Group ID: {group_id}, Group Link: {group_link}")
+
+                            except requests.exceptions.HTTPError as http_err:
                                 print(f"Failed to retrieve groups for User ID: {user_id}. Status code: {groups_response.status_code}")
+                                print(f"Error details: {http_err}")
+
+                            except Exception as e:
+                                print(f"An unexpected error occurred while processing user groups: {str(e)}")
 
                     page_cursor = data.get("nextPageCursor")
                     if page_cursor is None:
                         break
+
+                    page_number += 1
 
                 else:
                     print(f"Failed to retrieve data for Group ID: {group_id}. Status code: {response.status_code}")
@@ -46,8 +61,8 @@ def get_user_profiles(group_ids):
 
             except Exception as e:
                 print(f"An error occurred: {str(e)}")
-                break
+                
 
 if __name__ == "__main__":
-    group_ids = ["33687674"]
+    group_ids = ["33901499", "33687674"]
     get_user_profiles(group_ids)
