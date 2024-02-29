@@ -1,0 +1,1 @@
+Hello this is a roblox pedo sniper go into the code and add your group ids the format is "groupid", "groupid", "groupid" this was inspired by ruben sim. But this code is way shitter than his maybe update if this gets 5 stars
