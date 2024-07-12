@@ -3,4 +3,4 @@ Hello this is a roblox pedo sniper go into the code and add your group ids the f
 
 update 1 added looping threw pages and limits cause i found something silly in a little api request. Maybe add error handeling if 5 stars :) 2/29/2024
 
-added config file for funnys
+update 2 added a config file to make it more user friendly
