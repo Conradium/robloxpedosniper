@@ -1,6 +1,13 @@
-Hello this is a roblox pedo sniper go into the code and add your group ids the format is "groupid", "groupid", "groupid" this was inspired by ruben sim. But this code is way shitter than his maybe update if this gets 5 stars
+This is a fork of repository called "robloxpedosniper".
+The usage of this tool is to find roblox groups that has specific keywords against their ToS.
+Can be useful in catching pedos in the kid game.
 
 
-update 1 added looping threw pages and limits cause i found something silly in a little api request. Maybe add error handeling if 5 stars :) 2/29/2024
+# Notes from Conradium
+## Update 3
+Added:
+* Added asyncio and aiohttp for faster processing
+* Removed the break when encountering locked groups
+* Added a csv and json save
+* Duplicate checks for csv and json
 
-update 2 added a config file to make it more user friendly
